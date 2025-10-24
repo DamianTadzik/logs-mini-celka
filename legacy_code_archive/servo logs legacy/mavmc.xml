@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<mavlink>
+    <version>3</version>
+    
+    <messages>
+        <!-- HEARTBEAT (ID 0, z common.xml) -->
+        <message id="0" name="HEARTBEAT">
+            <description>Status of the MAV</description>
+            <field type="uint8_t" name="type">Vehicle or component type</field>
+            <field type="uint8_t" name="autopilot">Autopilot type</field>
+            <field type="uint8_t" name="base_mode">System mode bitmap</field>
+            <field type="uint32_t" name="custom_mode">Custom mode</field>
+            <field type="uint8_t" name="system_status">System status</field>
+            <field type="uint8_t" name="mavlink_version">MAVLink version (always 3)</field>
+        </message>
+
+        <!-- RADIO_STATUS (ID 109, z common.xml) -->
+        <message id="109" name="RADIO_STATUS">
+            <description>Status of radio link</description>
+            <field type="uint8_t" name="rssi">Local signal strength</field>
+            <field type="uint8_t" name="remrssi">Remote signal strength</field>
+            <field type="uint8_t" name="txbuf">Remaining free buffer space [%]</field>
+            <field type="uint8_t" name="noise">Local noise level</field>
+            <field type="uint8_t" name="remnoise">Remote noise level</field>
+            <field type="uint16_t" name="rxerrors">Receive errors</field>
+            <field type="uint16_t" name="fixed">Count of error-corrected packets</field>
+        </message>
+
+        <!-- Generic CAN frame -->
+        <message id="200" name="GENERIC_CAN_FRAME">
+            <description>Custom CAN frame message</description>
+            <field type="uint32_t" name="id">CAN frame ID</field>
+            <field type="uint8_t[8]" name="data">CAN frame payload</field>
+            <field type="uint8_t" name="dlc">Data length code</field>
+        </message>
+
+        <!-- Debug frame -->
+        <message id="201" name="DEBUG_FRAME">
+            <description>Debug frame with status and text</description>
+            <field type="uint8_t" name="status">Status code</field>
+            <field type="char[50]" name="text">Debug text (null-terminated if shorter)</field>
+        </message>
+    </messages>
+</mavlink>
