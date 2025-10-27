@@ -1,0 +1,159 @@
+VERSION ""
+
+NS_ :
+    NS_DESC_
+    CM_
+    BA_DEF_
+    BA_
+    VAL_
+    CAT_DEF_
+    CAT_
+    FILTER
+    BA_DEF_DEF_
+    EV_DATA_
+    ENVVAR_DATA_
+    SGTYPE_
+    SGTYPE_VAL_
+    BA_DEF_SGTYPE_
+    BA_SGTYPE_
+    SIG_TYPE_REF_
+    VAL_TABLE_
+    SIG_GROUP_
+    SIG_VALTYPE_
+    SIGTYPE_VALTYPE_
+    BO_TX_BU_
+    BA_DEF_REL_
+    BA_REL_
+    BA_DEF_DEF_REL_
+    BU_SG_REL_
+    BU_EV_REL_
+    BU_BO_REL_
+    SG_MUL_VAL_
+
+BS_:
+
+BU_: MINI_CELKA ACHTER_BOARD FORE_BOARD ODESC
+
+BO_ 1 ODRIVE_HEARTBEAT: 8 ODESC
+    SG_ Axis_Error              : 0|32@1+  (1,0) [0|4294967295] ""  Vector_XXX
+    SG_ Axis_Current_State      : 32|8@1+  (1,0) [0|255]           ""  Vector_XXX
+    SG_ Motor_Error_Flag        : 40|1@1+  (1,0) [0|1]             ""  Vector_XXX
+    SG_ Encoder_Error_Flag      : 41|1@1+  (1,0) [0|1]             ""  Vector_XXX
+    SG_ Controller_Error_Flag   : 42|1@1+  (1,0) [0|1]             ""  Vector_XXX
+    SG_ Trajectory_Done_Flag    : 47|1@1+  (1,0) [0|1]             ""  Vector_XXX
+
+BO_ 7 ODRIVE_SET_REQUESTED_STATE: 4 ODESC
+	SG_ Axis_Requested_State : 0|32@1+ (1,0) [0|4294967295] "" Vector_XXX
+
+BO_ 13 ODRIVE_SET_INPUT_VEL: 8 ODESC
+    SG_ Input_Vel               : 0|32@1+  (1,0) [0|0] "FLOAT32_IEEE" Vector_XXX
+    SG_ Torque_FF               : 32|32@1+ (1,0) [0|0] "FLOAT32_IEEE" Vector_XXX
+
+BO_ 20 ODRIVE_GET_IQ: 8 ODESC
+    SG_ Iq_Setpoint             : 0|32@1+  (1,0) [0|0] "FLOAT32_IEEE" Vector_XXX
+    SG_ Iq_Measured             : 32|32@1+ (1,0) [0|0] "FLOAT32_IEEE" Vector_XXX
+
+BO_ 21 ODRIVE_GET_SENSORLESS_ESTIMATES: 8 ODESC
+    SG_ Sensorless_Pos_Estimate : 0|32@1+  (1,0) [0|0] "FLOAT32_IEEE" Vector_XXX
+    SG_ Sensorless_Vel_Estimate : 32|32@1+ (1,0) [0|0] "FLOAT32_IEEE" Vector_XXX
+
+BO_ 23 ODRIVE_GET_BUS_VOLTAGE_CURRENT: 8 ODESC
+    SG_ Bus_Voltage 		: 0|32@1+  (1,0) [0|0] "V FLOAT32_IEEE"  Vector_XXX
+    SG_ Bus_Current             : 32|32@1+ (1,0) [0|0] "A FLOAT32_IEEE" Vector_XXX
+
+BO_ 24 ODRIVE_CLEAR_ERRORS: 0 ODESC
+
+
+BO_ 32 RADIO_CONTROL	:	8	ACHTER_BOARD
+	SG_ THROTTLE	:	0|11@1-		(1,0)	[-1000|1000]	"permile"	Vector__XXX
+	SG_ STEERING	:	11|11@1-	(1,0)	[-1000|1000]	"permile"	Vector__XXX
+	SG_ FRONT_PITCH	:	22|11@1-	(1,0)	[-1000|1000]	"permile"	Vector__XXX
+	SG_ FRONT_ROLL	:	33|11@1-	(1,0)	[-1000|1000]	"permile"	Vector__XXX
+	SG_ REAR_PITCH	:	44|11@1-	(1,0)	[-1000|1000]	"permile"	Vector__XXX
+	
+	SG_ FREE_BITS	:	56|2@1+	(1,0)	[0|15]	"-"	Vector__XXX	
+
+	SG_ SYNC_SWITCH	:	58|2@1+	(1,0)	[0|3]	"-"	Vector__XXX	
+	SG_ ARM_SWITCH	:	60|2@1+	(1,0)	[0|3]	"-"	Vector__XXX
+	SG_ MODE_SWITCH	:	62|2@1+	(1,0)	[0|3]	"-"	Vector__XXX
+
+
+BO_ 39 ACTUATOR_CONFIGURATION	:	1	MINI_CELKA 
+	SG_ REQUEST	:	0|4@1+	(1,0)	[0|3]	"-"	Vector_XXX
+	SG_ ACTUATOR	:	4|4@1+	(1,0)	[0|3]	"-"	Vector_XXX
+
+	VAL_ 39 REQUEST 0 "NONE" 1 "ON" 2 "OFF" 3 "AUTO_CALIBRATION";
+	VAL_ 39 ACTUATOR 0 "NONE" 1 "STEERING" 2 "RIGHT_FOIL" 3 "LEFT_FOIL" 4 "REAR_FOIL";
+
+BO_ 40 ACTUATOR_RIGHT_FOIL_FEEDBACK	:	8	FORE_BOARD
+	SG_ CURRENT		:	0|10@1-	(0.002,0)	[-1.0|1.0]	"A"	Vector__XXX
+	SG_ VOLTAGE		:	10|10@1+	(0.003,3.6)	[3.6|6.6]	"V"	Vector__XXX
+	SG_ POWER		:	20|8@1-	(0.05,0)	[-6|6]		"W"	Vector__XXX
+        
+	SG_ SETPOINT_US		:	28|10@1+	(1,988)		[988|2011]	"us"	Vector__XXX
+	SG_ POSITION_RAW	:	38|12@1+	(1,0)		[0|4091]	"-"	Vector__XXX
+	
+	SG_ FREE_BITS		:	50|10@1+	(1,0)	[0|1023]	"-"	Vector__XXX	
+
+	SG_ MODE		:	60|4@1+	(1,0)	[0|15]	"-"	Vector__XXX
+
+BO_ 41 ACTUATOR_LEFT_FOIL_FEEDBACK	:	8	FORE_BOARD
+	SG_ CURRENT		:	0|10@1-	(0.002,0)	[-1.0|1.0]	"A"	Vector__XXX
+	SG_ VOLTAGE		:	10|10@1+	(0.003,3.6)	[3.6|6.6]	"V"	Vector__XXX
+	SG_ POWER		:	20|8@1-	(0.05,0)	[-6|6]		"W"	Vector__XXX
+        
+	SG_ SETPOINT_US		:	28|10@1+	(1,988)		[988|2011]	"us"	Vector__XXX
+	SG_ POSITION_RAW	:	38|12@1+	(1,0)		[0|4091]	"-"	Vector__XXX
+	
+	SG_ FREE_BITS		:	50|10@1+	(1,0)	[0|1023]	"-"	Vector__XXX	
+
+	SG_ MODE		:	60|4@1+	(1,0)	[0|15]	"-"	Vector__XXX
+
+BO_ 42 ACTUATOR_REAR_FOIL_FEEDBACK	:	8	ACHTER_BOARD
+	SG_ CURRENT		:	0|10@1-	(0.002,0)	[-1.0|1.0]	"A"	Vector__XXX
+	SG_ VOLTAGE		:	10|10@1+	(0.003,3.6)	[3.6|6.6]	"V"	Vector__XXX
+	SG_ POWER		:	20|8@1-	(0.05,0)	[-6|6]		"W"	Vector__XXX
+        
+	SG_ SETPOINT_US		:	28|10@1+	(1,988)		[988|2011]	"us"	Vector__XXX
+	SG_ POSITION_RAW	:	38|12@1+	(1,0)		[0|4091]	"-"	Vector__XXX
+	
+	SG_ FREE_BITS		:	50|10@1+	(1,0)	[0|1023]	"-"	Vector__XXX	
+
+	SG_ MODE		:	60|4@1+	(1,0)	[0|15]	"-"	Vector__XXX
+
+BO_ 43 ACTUATOR_STEERING_FEEDBACK	:	8	ACHTER_BOARD
+	SG_ CURRENT		:	0|10@1-	(0.002,0)	[-1.0|1.0]	"A"	Vector__XXX
+	SG_ VOLTAGE		:	10|10@1+	(0.003,3.6)	[3.6|6.6]	"V"	Vector__XXX
+	SG_ POWER		:	20|8@1-	(0.05,0)	[-6|6]		"W"	Vector__XXX
+        
+	SG_ SETPOINT_US		:	28|10@1+	(1,988)		[988|2011]	"us"	Vector__XXX
+	SG_ POSITION_RAW	:	38|12@1+	(1,0)		[0|4091]	"-"	Vector__XXX
+	
+	SG_ FREE_BITS		:	50|10@1+	(1,0)	[0|1023]	"-"	Vector__XXX	
+
+	SG_ MODE		:	60|4@1+	(1,0)	[0|15]	"-"	Vector__XXX
+
+CM_ SG_ 43 CURRENT "Usable current range is around +/- 1A, because of 82mOhm shunt resistors used";
+CM_ SG_ 43 FREE_BITS "TODO - feedback of the setpoint in degrees but the ranges are different for steering and foils"; 
+
+BO_ 44 DISTANCE_FORE_FEEDBACK	:	8	FORE_BOARD
+	SG_ RANGE_MM_L		: 0|8@1+ (1,0) 		[0|255] "mm" Vector__XXX
+	SG_ ERROR_STATUS_L 	: 8|8@1+ (1,0)	 	[0|31] "" Vector__XXX
+	SG_ SIGNAL_RATE_MCPS_L 	: 16|16@1+ (0.0078125,0) [0|10] "MCPS" Vector__XXX
+	SG_ RANGE_MM_R		: 32|8@1+ (1,0) 		[0|255] "mm" Vector__XXX
+	SG_ ERROR_STATUS_R 	: 40|8@1+ (1,0)	 	[0|31] "" Vector__XXX
+	SG_ SIGNAL_RATE_MCPS_R	: 48|16@1+ (0.0078125,0) [0|10] "MCPS" Vector__XXX
+
+BO_ 45 DISTANCE_ACHTER_FEEDBACK	:	8	ACHTER_BOARD
+	SG_ RANGE_MM_L		: 0|8@1+ (1,0) 		[0|255] "mm" Vector__XXX
+	SG_ ERROR_STATUS_L 	: 8|8@1+ (1,0)	 	[0|31] "" Vector__XXX
+	SG_ SIGNAL_RATE_MCPS_L 	: 16|16@1+ (0.0078125,0) [0|10] "MCPS" Vector__XXX
+	SG_ RANGE_MM_R		: 32|8@1+ (1,0) 		[0|255] "mm" Vector__XXX
+	SG_ ERROR_STATUS_R 	: 40|8@1+ (1,0)	 	[0|31] "" Vector__XXX
+	SG_ SIGNAL_RATE_MCPS_R	: 48|16@1+ (0.0078125,0) [0|10] "MCPS" Vector__XXX
+
+BO_ 46 DISTANCE_BOW_FEEDBACK	:	4	MINI_CELKA
+	SG_ RANGE_MM		: 0|8@1+ (1,0) 		[0|255] "mm" Vector__XXX
+	SG_ ERROR_STATUS	: 8|8@1+ (1,0)	 	[0|31] "" Vector__XXX
+	SG_ SIGNAL_RATE_MCPS	: 16|16@1+ (0.0078125,0) [0|10] "MCPS" Vector__XXX
+
