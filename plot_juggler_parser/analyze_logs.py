@@ -37,6 +37,7 @@ def parse_log(input_path, verbose=False):
             if not line or line.startswith("#"):
                 continue
             line_count += 1
+
             spl = line.split(";")
             if len(spl) != 3:
                 corrupted += 1
@@ -48,6 +49,7 @@ def parse_log(input_path, verbose=False):
             if not (len(id_str) == 2 and is_valid_hex(id_str)):
                 corrupted += 1
                 continue
+
             try:
                 timestamp = datetime.datetime.strptime(timestamp_str, "%H:%M:%S,%f")
                 can_id = int(id_str, 16)
@@ -68,7 +70,7 @@ def analyze_frames(can_frames, dbc_path=None):
         dbc = cantools.database.load_file(dbc_path)
 
     for can_id, ts_list in can_frames.items():
-        ts_list = sorted(ts_list)
+        # ts_list = sorted(ts_list)
         msg_name = "(unmapped)"
         if dbc:
             try:
