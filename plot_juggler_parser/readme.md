@@ -45,6 +45,13 @@ python plot_juggler_parser/analyze_logs.py \
 
 6.  Import to PJ with select colum as a timestamp
 
+7. Convert GFR CSV to Parquet format
+
+python plot_juggler_parser/csv_parser.py \
+--input input.csv \
+--output output.parquet \
+--verbose
+
 # TODO 
 - description md file auto creation with cutter?
 - pipelining 1 i 2 i 5
