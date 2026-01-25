@@ -52,6 +52,17 @@ python plot_juggler_parser/csv_parser.py \
 --output output.parquet \
 --verbose
 
+8. Pull msgpack logs from RPI and convert to parquet
+
+python plot_juggler_parser/pull_and_convert_logs.py \
+  --host brzanpi@192.168.137.134 \
+  --remote-dir "home/brzanpi/ws_minicelka/rpi-controller-mini-celka/logs" \
+  --local-dir ./logs_raw \
+  --parquet-dir ./logs_parquet 
+
+OPTIONAL
+  --delete-remote
+
 # TODO 
 - description md file auto creation with cutter?
 - pipelining 1 i 2 i 5
