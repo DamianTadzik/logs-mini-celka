@@ -8,7 +8,7 @@ cd logs_storage/202X_XX_XX_xxx/
 
 python ../../pull_and_convert.py \
   --host brzanpi@192.168.1.49 \
-  --remote-dir "home/brzanpi/ws_minicelka/rpi-controller-mini-celka/dev/logs_runtime" \
+  --remote-dir "home/brzanpi/ws_minicelka/rpi-controller-mini-celka/src/logs_runtime" \
   --local-dir ./logs_raw \
   --parquet-dir ./logs_parquet 
 

@@ -82,28 +82,21 @@ def flatten_record(record):
         if key == "type":
             continue
 
+        if record_type == "can" and key == "message":
+            continue
+
         # CAN signals need one more hierarchy level:
         # can/signals/<message>/<signal>
         if key == "signals" and record_type == "can":
             message = record.get("message")
-
             if isinstance(value, dict) and message is not None:
-                flatten_dict(
-                    value,
-                    prefix=f"{record_type}/signals/{message}",
-                    out=out,
-                )
-
+                flatten_dict(value, prefix=f"{record_type}/signals/{message}", out=out)
             continue
 
         prefix = f"{record_type}/{key}"
 
         if isinstance(value, dict):
-            flatten_dict(
-                value,
-                prefix=prefix,
-                out=out,
-            )
+            flatten_dict(value, prefix=prefix, out=out)
         else:
             out[prefix] = value
 
@@ -221,7 +214,7 @@ def decode_msgpack_to_parquet(src, dst, batch_size=10000, cb=None):
     writer = pq.ParquetWriter(
         dst,
         arrow_schema,
-        compression="zstd",
+        compression="snappy",
         use_dictionary=True,
     )
     rows = []
