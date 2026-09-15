@@ -9,14 +9,27 @@ import pyarrow.parquet as pq
 
 def pull_logs(host, remote_dir, local_dir):
     os.makedirs(local_dir, exist_ok=True)
-
-    cmd = [
+    result = subprocess.run(
+        ["ssh", host, f"ls /{remote_dir}/*.msgpack"],
+        capture_output=True,
+        text=True,
+        check=True
+    )
+    filenames = [
+        os.path.basename(path)
+        for path in result.stdout.splitlines()
+    ]
+    subprocess.run([
         "scp",
         "-r",
         f"{host}:/{remote_dir}/*.msgpack",
         local_dir
+    ], check=True)
+
+    return [
+        os.path.join(local_dir, fname)
+        for fname in filenames
     ]
-    subprocess.run(cmd, check=True)
 
 def delete_remote_logs(host, remote_dir):
     cmd = [
@@ -288,14 +301,16 @@ if __name__ == "__main__":
     os.makedirs(args.parquet_dir, exist_ok=True)
 
     print("Pulling logs from RPi...")
-    pull_logs(args.host, args.remote_dir, args.local_dir)
+    downloaded_logs = pull_logs(args.host, args.remote_dir, args.local_dir)
 
     if args.delete_remote:
         print("Deleting logs on RPi...")
         delete_remote_logs(args.host, args.remote_dir)
 
     print("Decoding logs locally...")
-    for fname in os.listdir(args.local_dir):
+    # for fname in os.listdir(args.local_dir):
+    for src in downloaded_logs:
+        fname = os.path.basename(src)
         if not fname.endswith(".msgpack"):
             continue
         src = os.path.join(args.local_dir, fname)
